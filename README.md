@@ -1,6 +1,6 @@
-# Riff Roulette: Interactive Guitar Learning Game
+# RiffRoulette: Interactive Guitar Learning Game
 
-This project was created by `Akshat Namdeo`, `Rajan Sharma`, `Anuj Yadav`, and `Arkaparna Gantait` for the hackathon **[UGAHacks X](https://ugahacks.com/)** and is submitted for the following tracks:
+Project files created on the repository by `Akshat Namdeo` for the hackathon **[UGAHacks X](https://ugahacks.com/)** and are submitted for the following tracks:
 
 - **Main Tracks:**
     - [UGAHacks AI Track](#)
@@ -15,7 +15,7 @@ This project was created by `Akshat Namdeo`, `Rajan Sharma`, `Anuj Yadav`, and `
 
 ## Quick Description
 
-**Riff Roulette** is a guitar-based game through which users can create, perfect, and learn their craft. This Gen AI solution for musicians allows you to upload your own audio samples (or choose from 50 preprocessed famous tracks) and freestyle on them. Currently mapped to keyboard keys (Q, W, E, R, T, Y), the game combines real-time audio processing, adaptive difficulty, and dynamic scoring to offer a unique learning experience.
+**RiffRoulette** is a guitar-based game through which users can create, perfect, and learn their craft. This Gen AI solution for musicians allows you to upload your own audio samples (or choose from 50 preprocessed famous tracks) and freestyle on them. Currently mapped to keyboard keys (Q, W, E, R, T, Y), the game combines real-time audio processing, adaptive difficulty, and dynamic scoring to offer a unique learning experience.
 
 ## Table of Contents
 
@@ -35,7 +35,7 @@ This project was created by `Akshat Namdeo`, `Rajan Sharma`, `Anuj Yadav`, and `
 
 ## Overview
 
-**Riff Roulette** is designed to empower a wide variety of users—from beginners learning guitar basics to indie rock artists refining their performance skills. At its core, the project demonstrates how Gen AI can be used as a tool for creative and technical growth in music, rather than something to be feared. By dynamically adapting to your performance, our system helps you build confidence, improve timing and precision, and explore improvisation in an engaging, game-like setting.
+**RiffRoulette** is designed to empower a wide variety of users—from beginners learning guitar basics to indie rock artists refining their performance skills. At its core, the project demonstrates how Gen AI can be used as a tool for creative and technical growth in music, rather than something to be feared. By dynamically adapting to your performance, our system helps you build confidence, improve timing and precision, and explore improvisation in an engaging, game-like setting.
 
 ## Technical Architecture - Backend
 
@@ -140,153 +140,155 @@ This approach not only improves technical skills but also encourages musical cre
 
 All user data, game sessions, performance metrics, and progress analytics are stored in MongoDB. Below is an excerpt of our Python script that sets up the database with multiple collections and validation rules:
 
-        from pymongo import MongoClient
-        from pymongo.errors import CollectionInvalid
-        import logging
-        from typing import List, Dict
-        import os
-        from datetime import datetime
-        
-        # Configure logging
-        logging.basicConfig(level=logging.INFO)
-        logger = logging.getLogger(__name__)
-        
-        class RiffRouletteDBSetup:
-            def __init__(self, connection_string: str):
-                """Initialize database connection"""
-                try:
-                    self.client = MongoClient(connection_string)
-                    self.db = self.client.riff_roulette  # database name
-                    logger.info("Successfully connected to MongoDB")
-                except Exception as e:
-                    logger.error(f"Failed to connect to MongoDB: {str(e)}")
-                    raise
-        
-            def create_collections(self):
-                """Create all required collections with validators"""
-                try:
-                    # Users Collection
-                    self.create_users_collection()
-                    
-                    # GameSessions Collection
-                    self.create_game_sessions_collection()
-                    
-                    # UserProgress Collection
-                    self.create_user_progress_collection()
-                    
-                    # Achievements Collection
-                    self.create_achievements_collection()
-                    
-                    # Leaderboards Collection
-                    self.create_leaderboards_collection()
-                    
-                    # UserSessions Collection
-                    self.create_user_sessions_collection()
-                    
-                    # UserSkillAnalytics Collection
-                    self.create_user_skill_analytics_collection()
-                    
-                    # Create indexes
-                    self.create_indexes()
-                    
-                    logger.info("Successfully created all collections and indexes")
-                    
-                except Exception as e:
-                    logger.error(f"Error creating collections: {str(e)}")
-                    raise
-        
-            # ... (other collection creation methods)
+    from pymongo import MongoClient
+    from pymongo.errors import CollectionInvalid
+    import logging
+    from typing import List, Dict
+    import os
+    from datetime import datetime
+    
+    # Configure logging
+    logging.basicConfig(level=logging.INFO)
+    logger = logging.getLogger(__name__)
+    
+    class RiffRouletteDBSetup:
+        def __init__(self, connection_string: str):
+            """Initialize database connection"""
+            try:
+                self.client = MongoClient(connection_string)
+                self.db = self.client.riff_roulette  # database name
+                logger.info("Successfully connected to MongoDB")
+            except Exception as e:
+                logger.error(f"Failed to connect to MongoDB: {str(e)}")
+                raise
+    
+        def create_collections(self):
+            """Create all required collections with validators"""
+            try:
+                # Users Collection
+                self.create_users_collection()
+                
+                # GameSessions Collection
+                self.create_game_sessions_collection()
+                
+                # UserProgress Collection
+                self.create_user_progress_collection()
+                
+                # Achievements Collection
+                self.create_achievements_collection()
+                
+                # Leaderboards Collection
+                self.create_leaderboards_collection()
+                
+                # UserSessions Collection
+                self.create_user_sessions_collection()
+                
+                # UserSkillAnalytics Collection
+                self.create_user_skill_analytics_collection()
+                
+                # Create indexes
+                self.create_indexes()
+                
+                logger.info("Successfully created all collections and indexes")
+                
+            except Exception as e:
+                logger.error(f"Error creating collections: {str(e)}")
+                raise
+    
+        # ... (other collection creation methods)
         
 ### ER Diagram of the Database Schema
 
-        erDiagram
-            Users ||--o{ GameSessions : "plays"
-            Users ||--o{ UserProgress : "tracks progress"
-            Users ||--o{ UserSessions : "logs sessions"
-            Users ||--o{ UserSkillAnalytics : "analyzes skills"
-            Users }o--o{ Achievements : "earns"
-            
-            GameSessions ||--|{ Leaderboards : "contributes to"
-            GameSessions }o--|| Users : "belongs to"
-            
-            UserProgress }o--|| Users : "belongs to"
-            UserProgress ||--o{ GameSessions : "aggregates"
-            
-            UserSessions }o--|| Users : "belongs to"
-            UserSessions ||--o{ GameSessions : "includes"
-            
-            UserSkillAnalytics }o--|| Users : "analyzes"
-            UserSkillAnalytics ||--o{ GameSessions : "derived from"
-            
-            Leaderboards }o--|| Users : "ranks"
-            
-            Users {
-                ObjectId _id
-                String username
-                String email
-                Object profile
-                Object stats
-                Array achievements
-                Object settings
-            }
-            
-            GameSessions {
-                ObjectId _id
-                ObjectId user_id
-                String song_id
-                Date started_at
-                Date ended_at
-                Object notes_data
-                Object performance_metrics
-                Array problem_sections
-                Array progression
-            }
-            
-            UserProgress {
-                ObjectId _id
-                ObjectId user_id
-                String song_id
-                Number highest_score
-                Array difficulties_cleared
-                Array section_mastery
-                Object practice_stats
-            }
-            
-            Achievements {
-                ObjectId _id
-                String name
-                String description
-                Object requirements
-                String rarity
-                Number points
-            }
-            
-            Leaderboards {
-                ObjectId _id
-                String song_id
-                String difficulty
-                String type
-                String timeframe
-                Array entries
-            }
-            
-            UserSessions {
-                ObjectId _id
-                ObjectId user_id
-                Date session_start
-                Date ended_at
-                Object performance_summary
-                Object skill_progression
-            }
-            
-            UserSkillAnalytics {
-                ObjectId _id
-                ObjectId user_id
-                Object skill_metrics
-                Object string_proficiency
-                Array suggested_exercises
-                Object mastery_levels
-            }
+```mermaid
+erDiagram
+    Users ||--o{ GameSessions : "plays"
+    Users ||--o{ UserProgress : "tracks progress"
+    Users ||--o{ UserSessions : "logs sessions"
+    Users ||--o{ UserSkillAnalytics : "analyzes skills"
+    Users }o--o{ Achievements : "earns"
+    
+    GameSessions ||--|{ Leaderboards : "contributes to"
+    GameSessions }o--|| Users : "belongs to"
+    
+    UserProgress }o--|| Users : "belongs to"
+    UserProgress ||--o{ GameSessions : "aggregates"
+    
+    UserSessions }o--|| Users : "belongs to"
+    UserSessions ||--o{ GameSessions : "includes"
+    
+    UserSkillAnalytics }o--|| Users : "analyzes"
+    UserSkillAnalytics ||--o{ GameSessions : "derived from"
+    
+    Leaderboards }o--|| Users : "ranks"
+    
+    Users {
+        ObjectId _id
+        String username
+        String email
+        Object profile
+        Object stats
+        Array achievements
+        Object settings
+    }
+    
+    GameSessions {
+        ObjectId _id
+        ObjectId user_id
+        String song_id
+        Date started_at
+        Date ended_at
+        Object notes_data
+        Object performance_metrics
+        Array problem_sections
+        Array progression
+    }
+    
+    UserProgress {
+        ObjectId _id
+        ObjectId user_id
+        String song_id
+        Number highest_score
+        Array difficulties_cleared
+        Array section_mastery
+        Object practice_stats
+    }
+    
+    Achievements {
+        ObjectId _id
+        String name
+        String description
+        Object requirements
+        String rarity
+        Number points
+    }
+    
+    Leaderboards {
+        ObjectId _id
+        String song_id
+        String difficulty
+        String type
+        String timeframe
+        Array entries
+    }
+    
+    UserSessions {
+        ObjectId _id
+        ObjectId user_id
+        Date session_start
+        Date ended_at
+        Object performance_summary
+        Object skill_progression
+    }
+    
+    UserSkillAnalytics {
+        ObjectId _id
+        ObjectId user_id
+        Object skill_metrics
+        Object string_proficiency
+        Array suggested_exercises
+        Object mastery_levels
+    }
+
 
 ## HPCC Integration
 
@@ -510,6 +512,6 @@ Our aim is to promote the idea that Gen AI is here to empower musicians to explo
 - **UGAHacks X** for hosting the event.
 - The developers and maintainers of **Demucs**, **Onset & Frames**, and **Music VAE**.
 - **HPCC Systems** and **Pinata** for their sponsorship challenges and support.
-- All the contributors who helped bring **Riff Roulette** to life.
+- All the contributors who helped bring **RiffRoulette** to life.
 
 For any questions or further discussion, feel free to reach out or open an issue in this repository.
