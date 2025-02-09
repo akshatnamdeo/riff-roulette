@@ -1,0 +1,42 @@
+# Environment variables
+.env
+
+# Project specific folders
+/trained/
+/pretrained/
+
+# VS Code settings
+**/.vscode/
+
+# HPCC Preprocessing
+/HPCC Preprocessing/Songs/*
+
+# Dependencies
+/node_modules/
+/venv/
+/.env/
+/__pycache__/
+*.py[cod]
+
+# Distribution / packaging
+/dist/
+/build/
+*.egg-info/
+
+# Logs and databases
+*.log
+*.sqlite
+*.db
+
+# IDE specific files
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Local development settings
+local_settings.py

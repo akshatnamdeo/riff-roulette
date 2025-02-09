@@ -1,0 +1,58 @@
+{
+    "file_size": 744803,
+    "soundfile_load": {
+        "success": true,
+        "shape": [
+            1026432,
+            2
+        ],
+        "sample_rate": 44100,
+        "duration": 23.275102040816325
+    },
+    "audio_properties": {
+        "channels": 2,
+        "samples": 1026432,
+        "sample_rate": 44100,
+        "duration": 23.275102040816325,
+        "max_amplitude": 1.0144190788269043,
+        "mean_amplitude": 0.1350270917362296
+    },
+    "model_tests": {
+        "default": {
+            "success": true,
+            "num_notes": 168,
+            "processing_time": 43.94704294204712,
+            "max_note_time": 23.072,
+            "notes_distribution": {
+                "min_time": 0.0,
+                "max_time": 23.072,
+                "note_count_per_second": 7.281553398058253,
+                "avg_note_duration": 0.46038095238095234
+            }
+        },
+        "extended_chunk": {
+            "success": true,
+            "num_notes": 265,
+            "processing_time": 9.634474515914917,
+            "max_note_time": 22.993000000000002,
+            "notes_distribution": {
+                "min_time": 0.0,
+                "max_time": 22.993000000000002,
+                "note_count_per_second": 11.525246814247813,
+                "avg_note_duration": 0.4639396226415094
+            }
+        },
+        "high_threshold": {
+            "success": true,
+            "num_notes": 110,
+            "processing_time": 18.761364459991455,
+            "max_note_time": 21.856,
+            "notes_distribution": {
+                "min_time": 0.0,
+                "max_time": 21.856,
+                "note_count_per_second": 5.03294289897511,
+                "avg_note_duration": 0.5984000000000004
+            }
+        }
+    }
+}
