@@ -289,6 +289,7 @@ erDiagram
         Object mastery_levels
     }
 
+```
 
 ## HPCC Integration
 
